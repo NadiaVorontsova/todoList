@@ -1,0 +1,78 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Courier New", Courier, monospace;
+}
+
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  margin: 6% auto auto auto;
+  padding: 2%;
+  width: 40%;
+  background-color: rgb(112, 163, 188);
+}
+
+.title {
+  font-size: 35px;
+  padding-bottom: 3%;
+}
+
+.add__task {
+  display: flex;
+  height: 40px;
+  justify-content: space-around;
+  margin-bottom: 5%;
+}
+
+.input_task {
+  width: 78%;
+  border: none;
+  font-size: 18px;
+  padding-left: 3%;
+}
+
+.input_task::placeholder {
+  opacity: 0.7;
+}
+
+.input_task:focus,
+.add__button:focus {
+  outline: 3px solid #e73;
+}
+
+.add__button {
+  width: 20%;
+  font-size: 19px;
+  border: none;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.add__button:hover {
+  transform: scale(1.04);
+  background-color: #e73;
+}
+
+.todo__list {
+}
+
+.todo__list__item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2%;
+  background-color: white;
+  padding: 1% 2% 1% 2%;
+}
+
+.menu_for_item {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+  cursor: pointer;
+}
+
+.task_check {
+  cursor: pointer;
+}
