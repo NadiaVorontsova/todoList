@@ -80,16 +80,19 @@ listOfTasks.addEventListener("change", ({ target }) => {
 
 listOfTasks.addEventListener("click", ({ target }) => {
   todoList.forEach((item) => {
+    ///////////////////ПАМАГИ//////////////////////
     if (item.todo === target.dataset.delete) {
       let index = todoList.indexOf(target.dataset.delete);
       console.log(item.todo, target.dataset.delete, index);
       //todoList.splice(index, 1);
     }
-    if (item.todo === target.dataset.important) {
-      item.important = !item.important;
-      let data = listOfTasks.querySelector("[data-value=" + item.todo + "]");
-      data.classList.toggle("important_task");
-      localStorage.setItem("todo", JSON.stringify(todoList));
-    }
+    //////////////////////////////////////////////////////
+
+    // if (item.todo === target.dataset.important) {
+    //   item.important = !item.important;
+    //   let data = listOfTasks.querySelector("[data-value=" + item.todo + "]");
+    //   data.classList.toggle("important_task");
+    //   localStorage.setItem("todo", JSON.stringify(todoList));
+    // }
   });
 });
