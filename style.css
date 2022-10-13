@@ -19,6 +19,22 @@
   padding-bottom: 3%;
 }
 
+.full_date {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding-bottom: 3%;
+}
+
+.day {
+  font-size: 25px;
+}
+
+.date {
+  color: white;
+  font-weight: bold;
+}
+
 .add__task {
   display: flex;
   height: 40px;
@@ -75,4 +91,9 @@
 
 .task_check {
   cursor: pointer;
+}
+
+.important_task {
+  background-color: #e73;
+  color: white;
 }
