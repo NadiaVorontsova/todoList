@@ -2,7 +2,7 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: "Courier New", Courier, monospace;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .wrapper {
@@ -11,12 +11,16 @@
   margin: 6% auto auto auto;
   padding: 2%;
   width: 40%;
-  background-color: rgb(112, 163, 188);
+  background-color: #71a2b9;
+  border-radius: 6px;
 }
 
 .title {
-  font-size: 35px;
+  font-size: 45px;
+  font-weight: bold;
+  text-align: center;
   padding-bottom: 3%;
+  color: white;
 }
 
 .full_date {
@@ -24,29 +28,30 @@
   justify-content: space-between;
   align-items: baseline;
   padding-bottom: 3%;
+  color: white;
 }
 
 .day {
   font-size: 25px;
+  text-decoration: underline;
 }
 
 .date {
-  color: white;
-  font-weight: bold;
 }
 
 .add__task {
   display: flex;
   height: 40px;
-  justify-content: space-around;
+  justify-content: space-between;
   margin-bottom: 5%;
 }
 
 .input_task {
-  width: 78%;
+  width: 77%;
   border: none;
   font-size: 18px;
   padding-left: 3%;
+  border-radius: 6px;
 }
 
 .input_task::placeholder {
@@ -64,11 +69,15 @@
   border: none;
   transition: 0.3s;
   cursor: pointer;
+  background-color: #4f758b;
+  border-radius: 6px;
+  color: white;
+  font-weight: 600;
 }
 
 .add__button:hover {
   transform: scale(1.04);
-  background-color: #e73;
+  background-color: #628193;
 }
 
 .todo__list {
@@ -80,6 +89,8 @@
   margin-bottom: 2%;
   background-color: white;
   padding: 1% 2% 1% 2%;
+  border-radius: 6px;
+  color: #1f333d;
 }
 
 .menu_for_item {
@@ -91,9 +102,4 @@
 
 .task_check {
   cursor: pointer;
-}
-
-.important_task {
-  background-color: #e73;
-  color: white;
 }

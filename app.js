@@ -14,7 +14,7 @@ if (localStorage.getItem("todo")) {
 function getDayOfTheWeek() {
   let now = new Date();
   let date =
-    now.getDate() + "/" + (now.getMonth() + 1) + "/" + now.getFullYear();
+    now.getDate() + " / " + (now.getMonth() + 1) + " / " + now.getFullYear();
   let options = { weekday: "long" };
   dayOfTheWeek.innerHTML = new Intl.DateTimeFormat("en-US", options).format(
     now
@@ -28,13 +28,16 @@ addButton.addEventListener("click", () => {
     todo: inputTask.value,
     checked: false,
     important: false,
+    imageStar: "assets/image/star.png",
+    imageBin: "assets/image/bin.png",
   };
   todoList.push(newTask);
 
   displayItemsOfList();
   localStorage.setItem("todo", JSON.stringify(todoList));
+  console.log(3);
 });
-//localStorage.clear();
+
 function displayItemsOfList() {
   resetInput();
   let task = "";
@@ -50,12 +53,12 @@ function displayItemsOfList() {
             <input type="checkbox" id="item_${i}" class="task_check" ${
         item.checked ? "checked" : ""
       }/>
-            <img src="assets/image/star.png" width="15" height="15" alt="star" data-important=${
-              item.todo
-            } />
-            <img src="assets/image/bin.png" width="15" height="15" alt="bin" data-delete=${
-              item.todo
-            } />
+            <img src="${
+              item.imageStar
+            }" width="15" height="15" alt="" data-important="${item.todo}"/>
+            <img src="${
+              item.imageBin
+            }" width="15" height="15" alt="" data-delete="${item.todo}"/>
           </div>
         </li>`)
   );
@@ -74,25 +77,31 @@ listOfTasks.addEventListener("change", ({ target }) => {
     if (item.todo === forLabel) {
       item.checked = !item.checked;
       localStorage.setItem("todo", JSON.stringify(todoList));
+      console.log(2);
     }
   });
 });
 
 listOfTasks.addEventListener("click", ({ target }) => {
   todoList.forEach((item) => {
-    ///////////////////ПАМАГИ//////////////////////
-    if (item.todo === target.dataset.delete) {
-      let index = todoList.indexOf(target.dataset.delete);
-      console.log(item.todo, target.dataset.delete, index);
-      //todoList.splice(index, 1);
+    if (item.todo === target.dataset.important) {
+      item.important = !item.important;
+      let star = listOfTasks.querySelector(
+        "[data-important=" + item.todo + "]"
+      );
+      star.src = "assets/image/starActive.png";
+      // localStorage.setItem("todo", JSON.stringify(todoList));
     }
-    //////////////////////////////////////////////////////
-
-    // if (item.todo === target.dataset.important) {
-    //   item.important = !item.important;
-    //   let data = listOfTasks.querySelector("[data-value=" + item.todo + "]");
-    //   data.classList.toggle("important_task");
-    //   localStorage.setItem("todo", JSON.stringify(todoList));
-    // }
+    if (item.todo === target.dataset.delete) {
+      let index = todoList.findIndex(
+        (item) => item.todo === target.dataset.delete
+      );
+      todoList.splice(index, 1);
+      // localStorage.setItem("todo", JSON.stringify(todoList));
+      displayItemsOfList();
+    }
+    localStorage.setItem("todo", JSON.stringify(todoList));
+    console.log(1);
+    //displayItemsOfList();
   });
 });
