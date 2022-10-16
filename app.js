@@ -1,6 +1,7 @@
 const inputTask = document.querySelector(".input_task");
 const addButton = document.querySelector(".add__button");
 const listOfTasks = document.querySelector(".todo__list");
+const todo = document.querySelector(".wrapper");
 const dayOfTheWeek = document.querySelector(".day");
 const fullDate = document.querySelector(".date");
 
@@ -23,21 +24,6 @@ function getDayOfTheWeek() {
 }
 getDayOfTheWeek();
 
-addButton.addEventListener("click", () => {
-  let newTask = {
-    todo: inputTask.value,
-    checked: false,
-    important: false,
-    imageStar: "assets/image/star.png",
-    imageBin: "assets/image/bin.png",
-  };
-  todoList.push(newTask);
-
-  displayItemsOfList();
-  localStorage.setItem("todo", JSON.stringify(todoList));
-  console.log(3);
-});
-
 function displayItemsOfList() {
   resetInput();
   let task = "";
@@ -50,7 +36,7 @@ function displayItemsOfList() {
             <label class="item" for="item_${i}">${item.todo}</label>
           </div>
           <div class="menu_for_item">
-            <input type="checkbox" id="item_${i}" class="task_check" ${
+            <input type="checkbox" id="item_${i}" data-check="checkbox" class="task_check" ${
         item.checked ? "checked" : ""
       }/>
             <img src="${
@@ -69,20 +55,30 @@ function resetInput() {
   inputTask.value = "";
 }
 
-listOfTasks.addEventListener("change", ({ target }) => {
-  let forLabel = listOfTasks.querySelector(
-    "[for=" + target.getAttribute("id") + "]"
-  ).innerHTML;
-  todoList.forEach((item) => {
-    if (item.todo === forLabel) {
-      item.checked = !item.checked;
-      localStorage.setItem("todo", JSON.stringify(todoList));
-      console.log(2);
-    }
-  });
-});
+todo.addEventListener("click", ({ target }) => {
+  if (target.dataset.button === "addTask") {
+    let newTask = {
+      todo: inputTask.value,
+      checked: false,
+      important: false,
+      imageStar: "assets/image/star.png",
+      imageBin: "assets/image/bin.png",
+    };
+    todoList.push(newTask);
+    displayItemsOfList();
+  }
 
-listOfTasks.addEventListener("click", ({ target }) => {
+  if (target.dataset.check === "checkbox") {
+    let forLabel = listOfTasks.querySelector(
+      "[for=" + target.getAttribute("id") + "]"
+    ).innerHTML;
+    todoList.forEach((item) => {
+      if (item.todo === forLabel) {
+        item.checked = !item.checked;
+      }
+    });
+  }
+
   todoList.forEach((item) => {
     if (item.todo === target.dataset.important) {
       item.important = !item.important;
@@ -90,18 +86,16 @@ listOfTasks.addEventListener("click", ({ target }) => {
         "[data-important=" + item.todo + "]"
       );
       star.src = "assets/image/starActive.png";
-      // localStorage.setItem("todo", JSON.stringify(todoList));
     }
+
     if (item.todo === target.dataset.delete) {
       let index = todoList.findIndex(
         (item) => item.todo === target.dataset.delete
       );
       todoList.splice(index, 1);
-      // localStorage.setItem("todo", JSON.stringify(todoList));
       displayItemsOfList();
     }
-    localStorage.setItem("todo", JSON.stringify(todoList));
-    console.log(1);
-    //displayItemsOfList();
   });
+
+  localStorage.setItem("todo", JSON.stringify(todoList));
 });
