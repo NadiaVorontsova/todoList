@@ -1,16 +1,25 @@
 const inputTask = document.querySelector(".input_task");
-const addButton = document.querySelector(".add__button");
+const input = document.querySelector(".input_task");
 const listOfTasks = document.querySelector(".todo__list");
 const todo = document.querySelector(".wrapper");
 const dayOfTheWeek = document.querySelector(".day");
 const fullDate = document.querySelector(".date");
+const errorMessage = document.querySelector(".error_message");
+
+const starSrc = "assets/image/star.png";
+const newStarSrc = "assets/image/starActive.png";
 
 let todoList = [];
-
 if (localStorage.getItem("todo")) {
   todoList = JSON.parse(localStorage.getItem("todo"));
   displayItemsOfList();
 }
+
+const modalMenu = document.querySelector(".modal_menu");
+const modalButton = document.querySelector(".modal_button");
+modalButton.addEventListener("click", () => {
+  modalMenu.classList.add("modal_menu_invisible");
+});
 
 function getDayOfTheWeek() {
   let now = new Date();
@@ -20,17 +29,17 @@ function getDayOfTheWeek() {
   dayOfTheWeek.innerHTML = new Intl.DateTimeFormat("en-US", options).format(
     now
   );
-  fullDate.innerHTML = date;
+  fullDate.innerHTML = "&#128198; " + date;
 }
 getDayOfTheWeek();
 
 function displayItemsOfList() {
-  resetInput();
+  inputTask.value = "";
   let task = "";
   todoList.forEach(
     (item, i) =>
       (task += `
-        <li class="todo__list__item" data-value=${item.todo}>
+        <li class="todo__list__item">
           <div>
             <span> ${i + 1}. </span>
             <label class="item" for="item_${i}">${item.todo}</label>
@@ -39,33 +48,48 @@ function displayItemsOfList() {
             <input type="checkbox" id="item_${i}" data-check="checkbox" class="task_check" ${
         item.checked ? "checked" : ""
       }/>
-            <img src="${
-              item.imageStar
-            }" width="15" height="15" alt="" data-important="${item.todo}"/>
-            <img src="${
-              item.imageBin
-            }" width="15" height="15" alt="" data-delete="${item.todo}"/>
+            <button class="star_bin_button">
+              <img src="${
+                item.imageStar
+              }" width="15" height="15" alt="" data-important="${item.todo}"/>
+            </button>
+            <button class="star_bin_button">
+              <img src="${
+                item.imageBin
+              }" width="15" height="15" alt="" data-delete="${item.todo}"/>
+            </button>
           </div>
         </li>`)
   );
   listOfTasks.innerHTML = task;
 }
 
-function resetInput() {
-  inputTask.value = "";
+function addTask() {
+  let newTask = {
+    todo: inputTask.value,
+    checked: false,
+    important: false,
+    imageStar: "assets/image/star.png",
+    imageBin: "assets/image/bin.png",
+  };
+  if (inputTask.value != "") {
+    todoList.push(newTask);
+    errorMessage.innerHTML = "";
+  } else {
+    errorMessage.innerHTML = "You need to input task for the day!";
+  }
+  displayItemsOfList();
 }
+
+input.addEventListener("keypress", (e) => {
+  if (e.code === "Enter") {
+    addTask();
+  }
+});
 
 todo.addEventListener("click", ({ target }) => {
   if (target.dataset.button === "addTask") {
-    let newTask = {
-      todo: inputTask.value,
-      checked: false,
-      important: false,
-      imageStar: "assets/image/star.png",
-      imageBin: "assets/image/bin.png",
-    };
-    todoList.push(newTask);
-    displayItemsOfList();
+    addTask();
   }
 
   if (target.dataset.check === "checkbox") {
@@ -82,10 +106,15 @@ todo.addEventListener("click", ({ target }) => {
   todoList.forEach((item) => {
     if (item.todo === target.dataset.important) {
       item.important = !item.important;
-      let star = listOfTasks.querySelector(
-        "[data-important=" + item.todo + "]"
-      );
-      star.src = "assets/image/starActive.png";
+      todoList.forEach((item) => {
+        if (item.important) {
+          item.imageStar = newStarSrc;
+        } else {
+          item.imageStar = starSrc;
+        }
+      });
+
+      displayItemsOfList();
     }
 
     if (item.todo === target.dataset.delete) {
