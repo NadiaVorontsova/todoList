@@ -10,16 +10,45 @@ const starSrc = "assets/image/star.png";
 const newStarSrc = "assets/image/starActive.png";
 
 let todoList = [];
+
+const modalMenu = document.querySelector(".modal_menu");
+const modalButton = document.querySelector(".modal_button");
+
+modalButton.addEventListener("click", hideMenu);
+
+function hideMenu() {
+  modalMenu.classList.add("modal_menu_invisible");
+}
+
+function getCookie(name) {
+  var value = "; " + document.cookie;
+  var parts = value.split("; " + name + "=");
+  if (parts.length == 2) return parts.pop().split(";").shift();
+}
+
+function setCookie(cname, cvalue, exdays) {
+  var d = new Date();
+  d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+  var expires = "expires=" + d.toUTCString();
+  document.cookie = cname + "=" + cvalue + "; " + expires;
+}
+
+let cookies = () => {
+  var cookie = getCookie("hide-cookie");
+
+  if (cookie == "" || cookie == null) {
+    setCookie("hide-cookie", "true", 30);
+  } else {
+    hideMenu();
+  }
+};
+
+cookies();
+
 if (localStorage.getItem("todo")) {
   todoList = JSON.parse(localStorage.getItem("todo"));
   displayItemsOfList();
 }
-
-const modalMenu = document.querySelector(".modal_menu");
-const modalButton = document.querySelector(".modal_button");
-modalButton.addEventListener("click", () => {
-  modalMenu.classList.add("modal_menu_invisible");
-});
 
 function getDayOfTheWeek() {
   let now = new Date();

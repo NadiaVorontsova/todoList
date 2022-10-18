@@ -79,16 +79,16 @@ body {
   justify-content: space-between;
   align-items: baseline;
   padding-bottom: 3%;
+  color: white;
 }
 
 .day {
-  font-size: 27px;
+  font-size: 25px;
   text-transform: uppercase;
-  color: #4f758b;
 }
 
 .date {
-  color: white;
+  font-size: 16px;
 }
 
 .add__task {
