@@ -105,9 +105,20 @@ function addTask() {
     todoList.push(newTask);
     errorMessage.innerHTML = "";
   } else {
-    errorMessage.innerHTML = "You need to input task for the day!";
+    errorMessage.innerHTML = "Please input the task and click 'Add'!";
   }
   displayItemsOfList();
+}
+
+function moveImportantTask(target) {
+  const i = todoList.findIndex(
+    (item) => item.todo === target.dataset.important
+  );
+
+  const found = todoList.find((item) => item.todo === target.dataset.important);
+
+  todoList.splice(i, 1);
+  todoList.unshift(found);
 }
 
 input.addEventListener("keypress", (e) => {
@@ -142,7 +153,7 @@ todo.addEventListener("click", ({ target }) => {
           item.imageStar = starSrc;
         }
       });
-
+      moveImportantTask(target);
       displayItemsOfList();
     }
 
