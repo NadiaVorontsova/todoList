@@ -111,11 +111,11 @@ body {
 }
 
 .input_task:focus,
-.add__button:focus {
+.button:focus {
   outline: 3px solid #e73;
 }
 
-.add__button {
+.button {
   width: 20%;
   font-size: 19px;
   border: none;
@@ -127,8 +127,9 @@ body {
   font-weight: 600;
 }
 
-.add__button:hover,
-.modal_button:hover {
+.button:hover,
+.modal_button:hover,
+.archive_button:hover {
   transform: scale(1.04);
   background-color: #7fadc3;
 }
@@ -169,6 +170,11 @@ body {
   padding-bottom: 3%;
   color: red;
   font-size: 16px;
+}
+
+.archive_button {
+  padding: 1% 0;
+  align-self: flex-end;
 }
 
 @media (max-width: 915px) {

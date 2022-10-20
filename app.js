@@ -5,6 +5,7 @@ const todo = document.querySelector(".wrapper");
 const dayOfTheWeek = document.querySelector(".day");
 const fullDate = document.querySelector(".date");
 const errorMessage = document.querySelector(".error_message");
+const archiveListOfTasks = document.querySelector(".archive__list");
 
 const starSrc = "assets/image/star.png";
 const newStarSrc = "assets/image/starActive.png";
@@ -47,7 +48,7 @@ cookies();
 
 if (localStorage.getItem("todo")) {
   todoList = JSON.parse(localStorage.getItem("todo"));
-  displayItemsOfList();
+  displayItemsOfList(todoList, listOfTasks);
 }
 
 function getDayOfTheWeek() {
@@ -62,10 +63,10 @@ function getDayOfTheWeek() {
 }
 getDayOfTheWeek();
 
-function displayItemsOfList() {
+function displayItemsOfList(arrayOfElements, list) {
   inputTask.value = "";
   let task = "";
-  todoList.forEach(
+  arrayOfElements.forEach(
     (item, i) =>
       (task += `
         <li class="todo__list__item">
@@ -90,7 +91,7 @@ function displayItemsOfList() {
           </div>
         </li>`)
   );
-  listOfTasks.innerHTML = task;
+  list.innerHTML = task;
 }
 
 function addTask() {
@@ -107,8 +108,10 @@ function addTask() {
   } else {
     errorMessage.innerHTML = "Please input the task and click 'Add'!";
   }
-  displayItemsOfList();
+  displayItemsOfList(todoList, listOfTasks);
 }
+
+let archiveList = [];
 
 function moveImportantTask(target) {
   const i = todoList.findIndex(
@@ -154,15 +157,21 @@ todo.addEventListener("click", ({ target }) => {
         }
       });
       moveImportantTask(target);
-      displayItemsOfList();
+      displayItemsOfList(todoList, listOfTasks);
     }
 
     if (item.todo === target.dataset.delete) {
       let index = todoList.findIndex(
         (item) => item.todo === target.dataset.delete
       );
-      todoList.splice(index, 1);
-      displayItemsOfList();
+      const deletedEl = todoList.splice(index, 1);
+
+      archiveList.push(deletedEl);
+      displayItemsOfList(todoList, listOfTasks);
+    }
+
+    if (target.dataset.button === "archiveTask") {
+      displayItemsOfList(archiveList, archiveListOfTasks);
     }
   });
 
