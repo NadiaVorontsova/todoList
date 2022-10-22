@@ -11,6 +11,7 @@ const starSrc = "assets/image/star.png";
 const newStarSrc = "assets/image/starActive.png";
 
 let todoList = [];
+let archiveList = [];
 
 const modalMenu = document.querySelector(".modal_menu");
 const modalButton = document.querySelector(".modal_button");
@@ -18,7 +19,7 @@ const modalButton = document.querySelector(".modal_button");
 modalButton.addEventListener("click", hideMenu);
 
 function hideMenu() {
-  modalMenu.classList.add("modal_menu_invisible");
+  modalMenu.classList.add("invisible");
 }
 
 function getCookie(name) {
@@ -48,7 +49,12 @@ cookies();
 
 if (localStorage.getItem("todo")) {
   todoList = JSON.parse(localStorage.getItem("todo"));
-  displayItemsOfList(todoList, listOfTasks);
+  displayItemsOfList();
+}
+
+if (localStorage.getItem("archive")) {
+  archiveList = JSON.parse(localStorage.getItem("archive"));
+  displayArchiveItemsOfList();
 }
 
 function getDayOfTheWeek() {
@@ -63,10 +69,10 @@ function getDayOfTheWeek() {
 }
 getDayOfTheWeek();
 
-function displayItemsOfList(arrayOfElements, list) {
+function displayItemsOfList() {
   inputTask.value = "";
   let task = "";
-  arrayOfElements.forEach(
+  todoList.forEach(
     (item, i) =>
       (task += `
         <li class="todo__list__item">
@@ -91,7 +97,29 @@ function displayItemsOfList(arrayOfElements, list) {
           </div>
         </li>`)
   );
-  list.innerHTML = task;
+  listOfTasks.innerHTML = task;
+}
+
+function displayArchiveItemsOfList() {
+  let task = "";
+  archiveList.forEach(
+    (item, i) =>
+      (task += `
+        <li class="todo__list__item">
+          <div>
+            <span> ${i + 1}. </span>
+            <label class="item" for="item_${i}">${item.todo}</label>
+          </div>
+          <div class="menu_for_item">
+            <button class="star_bin_button">
+              <img src="${
+                item.imageAdd
+              }" width="15" height="15" alt="" data-important="${item.todo}"/>
+            </button>
+          </div>
+        </li>`)
+  );
+  archiveListOfTasks.innerHTML = task;
 }
 
 function addTask() {
@@ -101,6 +129,7 @@ function addTask() {
     important: false,
     imageStar: "assets/image/star.png",
     imageBin: "assets/image/bin.png",
+    imageAdd: "assets/image/add.png",
   };
   if (inputTask.value != "") {
     todoList.push(newTask);
@@ -108,10 +137,8 @@ function addTask() {
   } else {
     errorMessage.innerHTML = "Please input the task and click 'Add'!";
   }
-  displayItemsOfList(todoList, listOfTasks);
+  displayItemsOfList();
 }
-
-let archiveList = [];
 
 function moveImportantTask(target) {
   const i = todoList.findIndex(
@@ -146,6 +173,11 @@ todo.addEventListener("click", ({ target }) => {
     });
   }
 
+  if (target.dataset.button === "archiveTask") {
+    displayArchiveItemsOfList();
+    archiveListOfTasks.classList.toggle("invisible");
+  }
+
   todoList.forEach((item) => {
     if (item.todo === target.dataset.important) {
       item.important = !item.important;
@@ -157,7 +189,7 @@ todo.addEventListener("click", ({ target }) => {
         }
       });
       moveImportantTask(target);
-      displayItemsOfList(todoList, listOfTasks);
+      displayItemsOfList();
     }
 
     if (item.todo === target.dataset.delete) {
@@ -165,15 +197,12 @@ todo.addEventListener("click", ({ target }) => {
         (item) => item.todo === target.dataset.delete
       );
       const deletedEl = todoList.splice(index, 1);
-
-      archiveList.push(deletedEl);
-      displayItemsOfList(todoList, listOfTasks);
-    }
-
-    if (target.dataset.button === "archiveTask") {
-      displayItemsOfList(archiveList, archiveListOfTasks);
+      archiveList.push(...deletedEl);
+      displayItemsOfList();
     }
   });
 
   localStorage.setItem("todo", JSON.stringify(todoList));
+
+  localStorage.setItem("archive", JSON.stringify(archiveList));
 });
