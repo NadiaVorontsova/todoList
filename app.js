@@ -114,7 +114,7 @@ function displayArchiveItemsOfList() {
             <button class="star_bin_button">
               <img src="${
                 item.imageAdd
-              }" width="15" height="15" alt="" data-important="${item.todo}"/>
+              }" width="15" height="15" alt="" data-archive="${item.todo}"/>
             </button>
           </div>
         </li>`)
@@ -140,15 +140,11 @@ function addTask() {
   displayItemsOfList();
 }
 
-function moveImportantTask(target) {
-  const i = todoList.findIndex(
-    (item) => item.todo === target.dataset.important
-  );
-
-  const found = todoList.find((item) => item.todo === target.dataset.important);
-
-  todoList.splice(i, 1);
-  todoList.unshift(found);
+function moveTask(target, from, where) {
+  const i = from.findIndex((item) => item.todo === target);
+  const found = from.find((item) => item.todo === target);
+  from.splice(i, 1);
+  where.unshift(found);
 }
 
 input.addEventListener("keypress", (e) => {
@@ -188,7 +184,7 @@ todo.addEventListener("click", ({ target }) => {
           item.imageStar = starSrc;
         }
       });
-      moveImportantTask(target);
+      moveTask(target.dataset.important, todoList, todoList);
       displayItemsOfList();
     }
 
@@ -202,7 +198,13 @@ todo.addEventListener("click", ({ target }) => {
     }
   });
 
-  localStorage.setItem("todo", JSON.stringify(todoList));
+  archiveList.forEach((item) => {
+    if (item.todo === target.dataset.archive) {
+      moveTask(target.dataset.archive, archiveList, todoList);
+      displayItemsOfList();
+    }
+  });
 
+  localStorage.setItem("todo", JSON.stringify(todoList));
   localStorage.setItem("archive", JSON.stringify(archiveList));
 });
