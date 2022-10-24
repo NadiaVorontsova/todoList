@@ -32,7 +32,17 @@
       <button class="button archive_button" data-button="archiveTask">
         Archive
       </button>
-      <ul class="archive__list invisible"></ul>
+      <div class="archive invisible">
+        <ul class="archive__list"></ul>
+        <div class="archive_all__button">
+          <button class="button archive_button" data-button="deleteAllTasks">
+            Delete all
+          </button>
+          <button class="button archive_button" data-button="addAllTasks">
+            Add all
+          </button>
+        </div>
+      </div>
     </main>
     <script src="app.js"></script>
   </body>

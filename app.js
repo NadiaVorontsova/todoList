@@ -5,6 +5,7 @@ const todo = document.querySelector(".wrapper");
 const dayOfTheWeek = document.querySelector(".day");
 const fullDate = document.querySelector(".date");
 const errorMessage = document.querySelector(".error_message");
+const archiveEl = document.querySelector(".archive");
 const archiveListOfTasks = document.querySelector(".archive__list");
 
 const starSrc = "assets/image/star.png";
@@ -116,8 +117,14 @@ function displayArchiveItemsOfList() {
                 item.imageAdd
               }" width="15" height="15" alt="" data-archive="${item.todo}"/>
             </button>
+            <button class="star_bin_button">
+              <img src="${
+                item.imageBin
+              }" width="15" height="15" alt="" data-del_archive="${item.todo}"/>
+            </button>
           </div>
-        </li>`)
+        </li>
+        `)
   );
   archiveListOfTasks.innerHTML = task;
 }
@@ -169,11 +176,6 @@ todo.addEventListener("click", ({ target }) => {
     });
   }
 
-  if (target.dataset.button === "archiveTask") {
-    displayArchiveItemsOfList();
-    archiveListOfTasks.classList.toggle("invisible");
-  }
-
   todoList.forEach((item) => {
     if (item.todo === target.dataset.important) {
       item.important = !item.important;
@@ -195,15 +197,45 @@ todo.addEventListener("click", ({ target }) => {
       const deletedEl = todoList.splice(index, 1);
       archiveList.push(...deletedEl);
       displayItemsOfList();
+      displayArchiveItemsOfList();
     }
   });
+
+  if (target.dataset.button === "archiveTask") {
+    displayArchiveItemsOfList();
+    archiveEl.classList.toggle("invisible");
+  }
 
   archiveList.forEach((item) => {
     if (item.todo === target.dataset.archive) {
       moveTask(target.dataset.archive, archiveList, todoList);
       displayItemsOfList();
+      displayArchiveItemsOfList();
+    }
+
+    if (item.todo === target.dataset.del_archive) {
+      let index = archiveList.findIndex(
+        (item) => item.todo === target.dataset.del_archive
+      );
+      console.log(index);
+      archiveList.splice(index, 1);
+      displayArchiveItemsOfList();
     }
   });
+
+  if (target.dataset.button === "deleteAllTasks") {
+    archiveList = [];
+    displayArchiveItemsOfList();
+  }
+
+  if (target.dataset.button === "addAllTasks") {
+    archiveList.forEach((item) => {
+      todoList.push(item);
+    });
+    archiveList = [];
+    displayItemsOfList();
+    displayArchiveItemsOfList();
+  }
 
   localStorage.setItem("todo", JSON.stringify(todoList));
   localStorage.setItem("archive", JSON.stringify(archiveList));
