@@ -25,20 +25,56 @@
           class="input_task"
           placeholder="New task..."
         />
+        <div class="category_check">
+          <input type="checkbox" />
+          <input type="checkbox" />
+          <input type="checkbox" />
+          <input type="checkbox" />
+        </div>
         <button type="button" class="button" data-button="addTask">Add</button>
       </div>
       <span class="error_message"></span>
+      <div class="category">
+        <button
+          id="category"
+          class="button category__button_menu"
+          data-button="category"
+        >
+          <img
+            src="assets/image/burger.png"
+            class="category__burger_menu"
+            width="20"
+            height="20"
+            alt=""
+          />
+        </button>
+        <button class="button category__button" data-button="category_all">
+          All
+        </button>
+        <button class="button category__button" data-button="category_home">
+          Home
+        </button>
+        <button class="button category__button" data-button="category_work">
+          Work
+        </button>
+        <button
+          class="button category__button"
+          data-button="category_smth_else"
+        >
+          Smth else
+        </button>
+      </div>
       <ul class="todo__list"></ul>
-      <button class="button archive_button" data-button="archiveTask">
+      <button class="button button_all" data-button="archiveTask">
         Archive
       </button>
       <div class="archive invisible">
         <ul class="archive__list"></ul>
         <div class="archive_all__button">
-          <button class="button archive_button" data-button="deleteAllTasks">
+          <button class="button button_all" data-button="deleteAllTasks">
             Delete all
           </button>
-          <button class="button archive_button" data-button="addAllTasks">
+          <button class="button button_all" data-button="addAllTasks">
             Add all
           </button>
         </div>

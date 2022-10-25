@@ -34,6 +34,10 @@ body {
   display: none;
 }
 
+.visible {
+  display: flex;
+}
+
 .modal_button {
   width: 30%;
   font-size: 25px;
@@ -130,8 +134,27 @@ body {
 .button:hover,
 .modal_button:hover,
 .archive_button:hover {
-  transform: scale(1.04);
   background-color: #7fadc3;
+}
+
+.category {
+  display: flex;
+  column-gap: 1%;
+  margin-bottom: 2%;
+}
+
+.category__button_menu {
+  width: 5%;
+  padding: 5px 1%;
+}
+
+.category__burger_menu {
+  pointer-events: none;
+}
+
+.category__button {
+  width: 6%;
+  font-size: 12px;
 }
 
 .todo__list {
@@ -167,12 +190,12 @@ body {
 }
 
 .error_message {
-  padding-bottom: 3%;
+  padding-bottom: 1%;
   color: red;
   font-size: 16px;
 }
 
-.archive_button {
+.button_all {
   padding: 1% 0;
   margin-bottom: 2%;
   align-self: center;

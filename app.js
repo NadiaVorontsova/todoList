@@ -7,6 +7,7 @@ const fullDate = document.querySelector(".date");
 const errorMessage = document.querySelector(".error_message");
 const archiveEl = document.querySelector(".archive");
 const archiveListOfTasks = document.querySelector(".archive__list");
+const categoryAllBtns = document.querySelectorAll(".category__button");
 
 const starSrc = "assets/image/star.png";
 const newStarSrc = "assets/image/starActive.png";
@@ -163,6 +164,10 @@ input.addEventListener("keypress", (e) => {
 todo.addEventListener("click", ({ target }) => {
   if (target.dataset.button === "addTask") {
     addTask();
+  }
+
+  if (target.dataset.button === "category") {
+    categoryAllBtns.forEach((btn) => btn.classList.toggle("invisible"));
   }
 
   if (target.dataset.check === "checkbox") {
