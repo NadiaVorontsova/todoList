@@ -25,13 +25,46 @@
           class="input_task"
           placeholder="New task..."
         />
-        <div class="category_check">
-          <input type="checkbox" />
-          <input type="checkbox" />
-          <input type="checkbox" />
-          <input type="checkbox" />
+        <div class="category_check invisible">
+          <label for="home_task" class="category_check__text"
+            ><input
+              type="radio"
+              id="home_task"
+              name="task"
+              value="home_task"
+              class="task_check"
+            />
+            Home</label
+          ><br />
+          <label for="work_task" class="category_check__text"
+            ><input
+              type="radio"
+              id="work_task"
+              name="task"
+              value="home_task"
+              class="task_check"
+            />
+            Work</label
+          ><br />
+          <label for="smth_else_task" class="category_check__text"
+            ><input
+              type="radio"
+              id="smth_else_task"
+              name="task"
+              value="home_task"
+              class="task_check"
+            />
+            Smth else</label
+          >
         </div>
-        <button type="button" class="button" data-button="addTask">Add</button>
+        <button
+          type="button"
+          class="button"
+          data-button="addTask"
+          title="Choose tag for task"
+        >
+          Add
+        </button>
       </div>
       <span class="error_message"></span>
       <div class="category">
@@ -48,17 +81,26 @@
             alt=""
           />
         </button>
-        <button class="button category__button" data-button="category_all">
+        <button
+          class="button category__button invisible"
+          data-button="category_all"
+        >
           All
         </button>
-        <button class="button category__button" data-button="category_home">
+        <button
+          class="button category__button invisible"
+          data-button="category_home"
+        >
           Home
         </button>
-        <button class="button category__button" data-button="category_work">
+        <button
+          class="button category__button invisible"
+          data-button="category_work"
+        >
           Work
         </button>
         <button
-          class="button category__button"
+          class="button category__button invisible"
           data-button="category_smth_else"
         >
           Smth else

@@ -34,10 +34,6 @@ body {
   display: none;
 }
 
-.visible {
-  display: flex;
-}
-
 .modal_button {
   width: 30%;
   font-size: 25px;
@@ -103,7 +99,7 @@ body {
 }
 
 .input_task {
-  width: 77%;
+  width: 78%;
   border: none;
   font-size: 18px;
   padding-left: 3%;
@@ -137,6 +133,19 @@ body {
   background-color: #7fadc3;
 }
 
+.category_check {
+  position: absolute;
+  padding: 1%;
+  background-color: white;
+  color: #2c404a;
+  line-height: 22px;
+  top: 41%;
+  left: 68%;
+  width: 8%;
+  border-radius: 6px;
+  box-shadow: 0 0 10px 9px #4f758b;
+}
+
 .category {
   display: flex;
   column-gap: 1%;
@@ -146,10 +155,12 @@ body {
 .category__button_menu {
   width: 5%;
   padding: 5px 1%;
+  background-color: #71a2b9;
 }
 
 .category__burger_menu {
   pointer-events: none;
+  margin-top: 15%;
 }
 
 .category__button {
@@ -187,6 +198,10 @@ body {
 
 .task_check {
   cursor: pointer;
+}
+
+.category_check__text:hover {
+  color: #e73;
 }
 
 .error_message {
