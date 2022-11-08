@@ -167,20 +167,21 @@ input.addEventListener("keypress", (e) => {
 
 todo.addEventListener("click", ({ target }) => {
   if (target.dataset.button === "addTask") {
-    tagCheck.classList.toggle("invisible");
-  } else {
-    tagCheck.classList.add("invisible");
-  }
-
-  if (target.value === "home_task") {
     addTask();
+    //   tagCheck.classList.toggle("invisible");
+    // } else {
+    //   tagCheck.classList.add("invisible");
   }
 
-  if (target.dataset.button === "category") {
-    categoryAllBtns.forEach((btn) => btn.classList.toggle("invisible"));
-  } else {
-    categoryAllBtns.forEach((btn) => btn.classList.add("invisible"));
-  }
+  // if (target.value === "home_task") {
+  //   addTask();
+  // }
+
+  // if (target.dataset.button === "category") {
+  //   categoryAllBtns.forEach((btn) => btn.classList.toggle("invisible"));
+  // } else {
+  //   categoryAllBtns.forEach((btn) => btn.classList.add("invisible"));
+  // }
 
   if (target.dataset.check === "checkbox") {
     let forLabel = listOfTasks.querySelector(
